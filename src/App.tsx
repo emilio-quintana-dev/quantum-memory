@@ -48,11 +48,7 @@ function App() {
         <Route
           path="/login"
           exact
-          render={() => (
-            <Login
-              setLoggedIn={setLoggedIn}
-            />
-          )}
+          render={() => <Login setLoggedIn={setLoggedIn} />}
         />
 
         <Route path="/about">
@@ -62,40 +58,32 @@ function App() {
         <Route
           path="/register"
           exact
-          render={
-            (props) => <SignUp
-              {...props}
-              setLoggedIn={setLoggedIn}
-            />
-          }
+          render={() => <SignUp setLoggedIn={setLoggedIn} />}
         />
 
         <Route
           path="/bank"
           exact
-          render={(props) => <WordBank {...props} words={words} />}
+          render={() => <WordBank words={words} />}
         />
 
         <Route
           path="/quiz"
           exact
-          render={(props) => (
-            <Quiz {...props} words={words} setInputs={setInputs} />
-          )}
+          render={() => <Quiz setInputs={setInputs} />}
         />
 
         <Route
           path="/results"
           exact
-          render={(props) => (
+          render={() =>
             <Results
-              {...props}
               words={words}
               inputs={inputs}
               setLoggedIn={setLoggedIn}
               loggedIn={loggedIn}
             />
-          )}
+          }
         />
       </Switch>
 

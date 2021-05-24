@@ -1,6 +1,8 @@
 import React, { useEffect } from "react";
 import { Link } from "react-router-dom";
 
+import LandingImage from "../../images/svg_1.svg";
+
 import {
   Button,
   Column,
@@ -52,7 +54,7 @@ const Landing = ({ setLoggedIn, setWords }: Props) => {
           </Column>
 
           <ImgWrapper>
-            <Img src={require("../../images/svg_1.svg")} />
+            <Img src={LandingImage} />
           </ImgWrapper>
         </Row>
       </Container>

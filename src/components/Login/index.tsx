@@ -37,7 +37,7 @@ const Login = ({ setLoggedIn }: Props) => {
     // inputRef.current.focus();
   }, []);
 
-  const handleLogin = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleLogin = (e: React.FormEvent<HTMLInputElement>) => {
     e.preventDefault();
 
     axios

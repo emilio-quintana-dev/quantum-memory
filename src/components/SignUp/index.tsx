@@ -1,4 +1,8 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, {
+  useState,
+  useEffect,
+  useRef
+} from "react";
 import axios from "axios";
 import { useHistory } from "react-router-dom";
 
@@ -34,16 +38,19 @@ const SignUp = ({
   const inputRef = useRef(null);
 
   useEffect(() => {
-    inputRef.current.focus();
+    // Disabling until I get typescript working here
+    // inputRef.current.focus();
   }, []);
 
-  const handleSubmit = (e) => {
+  const handleSignUp = (e: React.FormEvent<HTMLInputElement>) => {
     e.preventDefault();
+
     axios
       .post("http://localhost:3000/users", values)
       .then((response) => {
-        console.log("here");
-        history.push("/");
+        if (response) {
+          history.push("/");
+        }
       })
       .catch(function (error) {
         if (error.response) {
@@ -52,7 +59,7 @@ const SignUp = ({
       });
   };
 
-  const handleChange = (e) => {
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
     setValues({
       ...values,
@@ -60,50 +67,71 @@ const SignUp = ({
     });
   };
 
+  const {
+    name,
+    email,
+    username,
+    password,
+    password_confirmation
+  } = values;
+
   return (
     <Container>
-      <Form onSubmit={handleSubmit}>
+      <Form onSubmit={handleSignUp}>
         <Title>Sign Up</Title>
+
         <InputWrapper>
           <Label>Name</Label>
           <Input
             type="text"
             name="name"
-            onChange={handleChange}
+            onChange={handleInputChange}
             ref={inputRef}
-            value={values.name}
+            value={name}
           />
 
           <Label>Email</Label>
           <Input
             type="text"
             name="email"
-            onChange={handleChange}
-            value={values.email}
+            onChange={handleInputChange}
+            value={email}
           />
+
           <Label>Username</Label>
           <Input
             type="text"
             name="username"
-            onChange={handleChange}
-            value={values.username}
+            onChange={handleInputChange}
+            value={username}
           />
+
           <Label>Password</Label>
           <Input
             type="password"
             name="password"
-            onChange={handleChange}
-            value={values.password}
+            onChange={handleInputChange}
+            value={password}
           />
+
           <Label>Password Confirmation</Label>
           <Input
             type="password"
             name="password_confirmation"
-            onChange={handleChange}
-            value={values.password_confirmation}
+            onChange={handleInputChange}
+            value={password_confirmation}
           />
+
         </InputWrapper>
-        {errors !== "" ? <ErrorMsg>{errors}</ErrorMsg> : null}
+
+        {
+          errors && (
+            <ErrorMsg>
+              {errors}
+            </ErrorMsg>
+          )
+        }
+
         <Button>Sign up</Button>
         <Span>
           Or <FormLink to="/login">log in</FormLink>

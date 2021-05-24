@@ -5,88 +5,53 @@ import { useHistory } from "react-router-dom";
 import { Container } from "../../globalStyles";
 
 interface Props {
-  setInputs: React.Dispatch<React.SetStateAction<>>;
+  setInputs: React.Dispatch<React.SetStateAction<string[]>>;
 }
 
 const Quiz = ({ setInputs }: Props) => {
   const history = useHistory();
-  const [values, setValues] = useState([]);
+  const [answers, setAnswers] = useState<string[]>([]);
 
-  const handleChange = (e) => {
-    values[e.target.name] = e.target.value;
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setAnswers({
+      ...answers,
+      [e.target.name]: e.target.value
+    })
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = (e: React.ChangeEvent<HTMLElement>) => {
     e.preventDefault();
-    props.setInputs(values);
+    setInputs(answers);
     history.push("/results");
   };
+
+  const renderInputFields = () => {
+    const times = 10;
+    let inputFields: JSX.Element[] = [];
+
+    for(let i = 0; i < times; i++) {
+      inputFields.push
+      (
+        <Input
+          type="text"
+          name={i}
+          onChange={handleChange}
+          placeholde="word"
+        />
+      );
+    }
+
+    return inputFields.join();
+  }
 
   return (
     <>
       <Container>
         <Form onSubmit={handleSubmit}>
           <Title>Let's see how much you remember</Title>
-          <Input
-            type="text"
-            name={0}
-            placeholder="Word"
-            onChange={handleChange}
-          />
-          <Input
-            type="text"
-            name={1}
-            placeholder="Word"
-            onChange={handleChange}
-          />
-          <Input
-            type="text"
-            name={2}
-            placeholder="Word"
-            onChange={handleChange}
-          />
-          <Input
-            type="text"
-            name={3}
-            placeholder="Word"
-            onChange={handleChange}
-          />
-          <Input
-            type="text"
-            name={4}
-            placeholder="Word"
-            onChange={handleChange}
-          />
-          <Input
-            type="text"
-            name={5}
-            placeholder="Word"
-            onChange={handleChange}
-          />
-          <Input
-            type="text"
-            name={6}
-            placeholder="Word"
-            onChange={handleChange}
-          />
-          <Input
-            type="text"
-            name={7}
-            placeholder="Word"
-            onChange={handleChange}
-          />
-          <Input
-            type="text"
-            name={8}
-            placeholder="Word"
-            onChange={handleChange}
-          />
-          <Input
-            type="text"
-            name={9}
-            placeholder="Word"
-            onChange={handleChange}
-          />
+
+          {renderInputFields()}
+
           <Button primary>Submit</Button>
         </Form>
       </Container>
